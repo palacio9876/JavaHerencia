@@ -16,9 +16,6 @@ public class CitaMedica {
     }
     /**
      * @param servicio the servicio to set
-
-    Instructor: Cristian David Henao Hoyos.
-
      */
     public void setServicio(String servicio) {
         this.servicio = servicio;

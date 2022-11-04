@@ -33,7 +33,7 @@ public class Persona {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    /**
+    /**setNombre("daniel")
      * @return the apellido
      */
     public String getApellido() {

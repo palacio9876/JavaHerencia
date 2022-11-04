@@ -1,22 +1,27 @@
 package logica;
+
 import hospital.CitaMedica;
 import personas.EmpleadoEventual;
 import personas.EmpleadoPlanilla;
 import personas.Medico;
 import personas.Paciente;
 import javax.swing.JOptionPane;
+import java.util.ArrayList;
 
 public class Procesos {
+
     String dni,nombre,apellido,fechaNacimiento,direccion,ciudad,codEmpleado,numHorasExt, fechaIngreso, area,cargo;
-    Paciente arregloPacientes[];
-    EmpleadoPlanilla arregloEmpleadosPlanilla[];
-    EmpleadoEventual arregloEmpleadosEventual[];
-    Medico arregloMedicos[];
-    CitaMedica arregloCitas[];
+
+    ArrayList<Paciente> listPacientes = new ArrayList<Paciente>();
+    ArrayList<EmpleadoPlanilla> arregloEmpleadosPlanilla= new ArrayList<EmpleadoPlanilla>();
+    ArrayList<EmpleadoEventual> arregloEmpleadosEventual = new ArrayList<EmpleadoEventual>();
+    ArrayList<Medico> arregloMedicos = new ArrayList<Medico>();
+
+    ArrayList<CitaMedica> arregloCitas = new ArrayList<CitaMedica>();
     int cantCitas=0;
     public Procesos(){
+
         int numCitas=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de citas medicas por dia"));
-        arregloCitas=new CitaMedica[numCitas];
         presentarMenu();
     }
     private void presentarMenu(){
@@ -34,8 +39,8 @@ public class Procesos {
                     cargarMenuRegistro();
                     break;
                 case 2:
-                    System.out.println(cantCitas+"<"+arregloCitas.length);
-                    if (cantCitas<arregloCitas.length) {
+                    System.out.println(cantCitas+"<"+arregloCitas.size());
+                    if (cantCitas <=arregloCitas.size()) {
                         if (validaRegistrosPrevios()) {
                             registrarCitaMedica();
                         }else{
@@ -60,6 +65,7 @@ public class Procesos {
         } while (opc!=4);
         JOptionPane.showMessageDialog(null, "salio");
     }
+    /**  */
     private void imprimirDatos() {
         String menuMsj="Menu Reportes\n\n";
         menuMsj+="1. Imprimir Empleados de Planilla\n";
@@ -72,14 +78,14 @@ public class Procesos {
 
         switch (cod) {
             case 1:
-                if (arregloEmpleadosPlanilla!=null) {
+                if (!arregloEmpleadosPlanilla.isEmpty()) {
                     System.out.println("***************************Empleados Planilla**************************************");
-                    for (int i = 0; i < arregloEmpleadosPlanilla.length; i++) {
-                        System.out.println("Numero DNI: "+arregloEmpleadosPlanilla[i].getDni());
-                        System.out.println("Nombre: "+arregloEmpleadosPlanilla[i].getNombre()+" "+arregloEmpleadosPlanilla[i].getApellido());
-                        System.out.println("Codigo Empleado: "+arregloEmpleadosPlanilla[i].getCodEmpleado());
-                        System.out.println("Cargo: "+arregloEmpleadosPlanilla[i].getCargo());
-                        System.out.println("Salario mensual: "+arregloEmpleadosPlanilla[i].getSalarioMensual());
+                    for (int i = 0; i < arregloEmpleadosPlanilla.size(); i++) {
+                        System.out.println("Numero DNI: "+arregloEmpleadosPlanilla.get(i).getDni());
+                        System.out.println("Nombre: "+arregloEmpleadosPlanilla.get(i).getNombre()+" "+arregloEmpleadosPlanilla.get(i).getApellido());
+                        System.out.println("Codigo Empleado: "+arregloEmpleadosPlanilla.get(i).getCodEmpleado());
+                        System.out.println("Cargo: "+arregloEmpleadosPlanilla.get(i).getCargo());
+                        System.out.println("Salario mensual: "+arregloEmpleadosPlanilla.get(i).getSalarioMensual());
                         System.out.println();
                     }
 
@@ -90,16 +96,16 @@ public class Procesos {
                 }
                 break;
             case 2:
-                if (arregloEmpleadosEventual!=null) {
+                if (!arregloEmpleadosEventual.isEmpty()) {
 
                     System.out.println("******************************Empleados Eventuales**************************************");
-                    for (int i = 0; i < arregloEmpleadosEventual.length; i++) {
-                        System.out.println("Numero DNI: "+arregloEmpleadosEventual[i].getDni());
-                        System.out.println("Nombre: "+arregloEmpleadosEventual[i].getNombre()+" "+arregloEmpleadosEventual[i].getApellido());
-                        System.out.println("Codigo Empleado: "+arregloEmpleadosEventual[i].getCodEmpleado());
-                        System.out.println("Cargo: "+arregloEmpleadosEventual[i].getCargo());
-                        System.out.println("Honorarios por hora: "+arregloEmpleadosEventual[i].getHonorariosHora());
-                        System.out.println("Fecha termino de contrato: "+arregloEmpleadosEventual[i].getFechaTerminoContrato());
+                    for (int i = 0; i < arregloEmpleadosEventual.size(); i++) {
+                        System.out.println("Numero DNI: "+arregloEmpleadosEventual.get(i).getDni());
+                        System.out.println("Nombre: "+arregloEmpleadosEventual.get(i).getNombre()+" "+arregloEmpleadosEventual.get(i).getApellido());
+                        System.out.println("Codigo Empleado: "+arregloEmpleadosEventual.get(i).getCodEmpleado());
+                        System.out.println("Cargo: "+arregloEmpleadosEventual.get(i).getCargo());
+                        System.out.println("Honorarios por hora: "+arregloEmpleadosEventual.get(i).getHonorariosHora());
+                        System.out.println("Fecha termino de contrato: "+arregloEmpleadosEventual.get(i).getFechaTerminoContrato());
                         System.out.println();
                     }
 
@@ -110,15 +116,15 @@ public class Procesos {
                 }
                 break;
             case 3:
-                if (arregloMedicos!=null) {
+                if (!arregloMedicos.isEmpty()) {
                     System.out.println("**********************************Medicos*********************************************");
-                    for (int i = 0; i < arregloMedicos.length; i++) {
-                        System.out.println("Numero DNI: "+arregloMedicos[i].getDni());
-                        System.out.println("Nombre: "+arregloMedicos[i].getNombre()+" "+arregloMedicos[i].getApellido());
-                        System.out.println("Codigo Empleado: "+arregloMedicos[i].getCodEmpleado());
-                        System.out.println("Cargo: "+arregloMedicos[i].getCargo());
-                        System.out.println("Especialidad: "+arregloMedicos[i].getEspecialidad());
-                        System.out.println("Numero de consultorio: "+arregloMedicos[i].getNumConsultorio());
+                    for (int i = 0; i < arregloMedicos.size(); i++) {
+                        System.out.println("Numero DNI: "+arregloMedicos.get(i).getDni());
+                        System.out.println("Nombre: "+arregloMedicos.get(i).getNombre()+" "+arregloMedicos.get(i).getApellido());
+                        System.out.println("Codigo Empleado: "+arregloMedicos.get(i).getCodEmpleado());
+                        System.out.println("Cargo: "+arregloMedicos.get(i).getCargo());
+                        System.out.println("Especialidad: "+arregloMedicos.get(i).getEspecialidad());
+                        System.out.println("Numero de consultorio: "+arregloMedicos.get(i).getNumConsultorio());
                         System.out.println();
                     }
 
@@ -130,19 +136,19 @@ public class Procesos {
                 }
                 break;
             case 4:
-                if (arregloPacientes!=null) {
+                if (!listPacientes.isEmpty()) {
 
                     System.out.println("**********************************Pacientes*********************************************");
 
-                    for (int i = 0; i < arregloPacientes.length; i++) {
-                        System.out.println("Numero DNI: "+arregloPacientes[i].getDni());
-                        System.out.println("Nombre: "+arregloPacientes[i].getNombre()+" "+arregloPacientes[i].getApellido());
-                        System.out.println("Numero Historia Clinica: "+arregloPacientes[i].getNumHistoria());
-                        System.out.println("Sexo: "+arregloPacientes[i].getSexo());
-                        System.out.println("Grupo Sanguineo: "+arregloPacientes[i].getGrupoSanguineo());
+                    for (int i = 0; i < listPacientes.size(); i++) {
+                        System.out.println("Numero DNI: "+listPacientes.get(i).getDni());
+                        System.out.println("Nombre: "+listPacientes.get(i).getNombre()+" "+listPacientes.get(i).getApellido());
+                        System.out.println("Numero Historia Clinica: "+listPacientes.get(i).getNumHistoria());
+                        System.out.println("Sexo: "+listPacientes.get(i).getSexo());
+                        System.out.println("Grupo Sanguineo: "+listPacientes.get(i).getGrupoSanguineo());
                         System.out.println("Lista Medicamentos");
-                        for (int j = 0; j < arregloPacientes[i].getListaMedicamentos().length; j++) {
-                            System.out.print(arregloPacientes[i].getListaMedicamentos()[j]+" / ");
+                        for (int j = 0; j < listPacientes.get(i).getListaMedicamentos().length; j++) {
+                            System.out.print(listPacientes.get(i).getListaMedicamentos()[j]+" / ");
                         }
                         System.out.println();
                     }
@@ -154,14 +160,14 @@ public class Procesos {
                 }
                 break;
             case 5:
-                if (arregloCitas!=null) {
+                if (!arregloCitas.isEmpty()) {
                     System.out.println("**********************************Citas*********************************************");
-                    for (int i = 0; i < arregloCitas.length; i++) {
-                        System.out.println("Servicio: "+arregloCitas[i].getServicio());
-                        System.out.println("Paciente: "+arregloCitas[i].getPaciente().getNombre()+" "+arregloCitas[i].getPaciente().getApellido());
-                        System.out.println("Medico: "+arregloCitas[i].getMedico().getNombre()+" "+arregloCitas[i].getMedico().getApellido() );
-                        System.out.println("Fecha: "+arregloCitas[i].getFecha());
-                        System.out.println("Hora: "+arregloCitas[i].getHora());
+                    for (int i = 0; i < arregloCitas.size(); i++) {
+                        System.out.println("Servicio: "+ arregloCitas.get(i).getServicio());
+                        System.out.println("Paciente: "+arregloCitas.get(i).getPaciente().getNombre()+" "+arregloCitas.get(i).getPaciente().getApellido());
+                        System.out.println("Medico: "+arregloCitas.get(i).getMedico().getNombre()+" "+arregloCitas.get(i).getMedico().getApellido() );
+                        System.out.println("Fecha: "+arregloCitas.get(i).getFecha());
+                        System.out.println("Hora: "+arregloCitas.get(i).getHora());
                         System.out.println();
                     }
 
@@ -177,7 +183,7 @@ public class Procesos {
     }
     private boolean validaRegistrosEmpleados() {
         boolean retorno=false;
-        if (arregloEmpleadosPlanilla!=null || arregloEmpleadosEventual!=null) {
+        if (!arregloEmpleadosPlanilla.isEmpty() || !arregloEmpleadosEventual.isEmpty()) {
 
             if (validarEmpleado()) {
                 retorno=true;
@@ -192,8 +198,8 @@ public class Procesos {
     private boolean validarEmpleadoPlanilla() {
         String documentoEmpleado=JOptionPane.showInputDialog("Ingrese el documento del empleado por planilla");
         boolean retorna=false;
-        for (int i = 0; i < arregloEmpleadosPlanilla.length; i++) {
-            if (documentoEmpleado.equals(arregloEmpleadosPlanilla[i].getDni())) {
+        for (int i = 0; i < arregloEmpleadosPlanilla.size(); i++) {
+            if (documentoEmpleado.equals(arregloEmpleadosPlanilla.get(i).getDni())) {
                 retorna=true;
             }
         }
@@ -202,17 +208,17 @@ public class Procesos {
     private boolean validarEmpleado() {
         String documentoEmpleado=JOptionPane.showInputDialog("Ingrese el documento del empleado");
         boolean retorna=false;
-        if (arregloEmpleadosPlanilla!=null) {
-            for (int i = 0; i < arregloEmpleadosPlanilla.length; i++) {
-                if (documentoEmpleado.equals(arregloEmpleadosPlanilla[i].getDni())) {
+        if (!arregloEmpleadosPlanilla.isEmpty()) {
+            for (int i = 0; i < arregloEmpleadosPlanilla.size(); i++) {
+                if (documentoEmpleado.equals(arregloEmpleadosPlanilla.get(i).getDni())) {
                     retorna=true;
                 }
             }
         }
         if (retorna==false) {
-            if (arregloEmpleadosEventual!=null) {
-                for (int i = 0; i < arregloEmpleadosEventual.length; i++) {
-                    if (documentoEmpleado.equals(arregloEmpleadosEventual[i].getDni())) {
+            if (!arregloEmpleadosEventual.isEmpty()) {
+                for (int i = 0; i < arregloEmpleadosEventual.size(); i++) {
+                    if (documentoEmpleado.equals(arregloEmpleadosEventual.get(i).getDni())) {
                         retorna=true;
                     }
                 }
@@ -222,7 +228,7 @@ public class Procesos {
     }
     private boolean validaRegistrosPrevios() {
         boolean retorno=false;
-        if (arregloPacientes!=null && arregloMedicos!=null && arregloEmpleadosPlanilla!=null) {
+        if (!listPacientes.isEmpty() && !arregloMedicos.isEmpty() && !arregloEmpleadosPlanilla.isEmpty()) {
             retorno=true;
         }
         return retorno;
@@ -236,7 +242,7 @@ public class Procesos {
             miCita.setFecha(JOptionPane.showInputDialog("Ingrese la fecha"));
             miCita.setHora(JOptionPane.showInputDialog("Ingrese la Hora"));
             JOptionPane.showMessageDialog(null, "La cita se ha registrado exitosamente!!!");
-            arregloCitas[cantCitas]=miCita;
+            arregloCitas.add(miCita);
             cantCitas++;
         }else{
             JOptionPane.showMessageDialog(null, "El documento no corresponde a un empleado por planilla","Advertencia",JOptionPane.WARNING_MESSAGE);
@@ -249,9 +255,10 @@ public class Procesos {
         do {
             String documentoPaciente=JOptionPane.showInputDialog("Ingrese el documento del Medico");
 
-            for (int i = 0; i < arregloMedicos.length; i++) {
-                if (documentoPaciente.equals(arregloMedicos[i].getDni())) {
-                    miMedico=arregloMedicos[i];
+            for (int i = 0; i < arregloMedicos.size(); i++) {
+                if (documentoPaciente.equals(arregloMedicos.get(i).getDni())) {
+                    miMedico=arregloMedicos.get(i);
+                    repiteCiclo=true;
                 }
             }
             if (miMedico!=null) {
@@ -270,9 +277,9 @@ public class Procesos {
         do {
             String documentoPaciente=JOptionPane.showInputDialog("Ingrese el documento del paciente");
 
-            for (int i = 0; i < arregloPacientes.length; i++) {
-                if (documentoPaciente.equals(arregloPacientes[i].getDni())) {
-                    miPaciente=arregloPacientes[i];
+            for (int i = 0; i < listPacientes.size(); i++) {
+                if (documentoPaciente.equals(listPacientes.get(i).getDni())) {
+                    miPaciente=listPacientes.get(i);
                 }
             }
             if (miPaciente!=null) {
@@ -311,9 +318,8 @@ public class Procesos {
         }
     }
     private void registrarPaciente() {
-        if (arregloPacientes==null) {
+        if (listPacientes.isEmpty()) {
             int cantPaciente=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de Pacientes a registrar"));
-            arregloPacientes=new Paciente[cantPaciente];
             for (int i = 0; i < cantPaciente; i++) {
                 JOptionPane.showMessageDialog(null, "Registro de datos paciente "+(i+1));
                 Paciente miPaciente=new Paciente();
@@ -336,7 +342,7 @@ public class Procesos {
                     arregloMedicamentos[j]=JOptionPane.showInputDialog("Ingrese el medicamento "+(j+1));
                 }
                 miPaciente.setListaMedicamentos(arregloMedicamentos);
-                arregloPacientes[i]=miPaciente;
+                listPacientes.add(miPaciente);
             }
             JOptionPane.showMessageDialog(null, "El registro de Pacientes se ha realizado con exito");
 
@@ -347,9 +353,9 @@ public class Procesos {
     private void registrarEmpleado(int tipo) {
         switch (tipo) {
             case 1:
-                if (arregloEmpleadosPlanilla==null) {
+                if (arregloEmpleadosPlanilla.isEmpty()) {
                     int cantEmpleadoPlanilla=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de empleados por planilla a registrar"));
-                    arregloEmpleadosPlanilla=new EmpleadoPlanilla[cantEmpleadoPlanilla];
+
 
                     for (int i = 0; i < cantEmpleadoPlanilla; i++) {
                         JOptionPane.showMessageDialog(null, "Registro de datos Empleado Planilla "+(i+1));
@@ -376,7 +382,7 @@ public class Procesos {
 
                         miEmpleadoPlanilla.setSalarioMensual(Double.parseDouble(JOptionPane.showInputDialog("Ingrese el salario mensual del empleado por Planilla"+(i+1))));
                         miEmpleadoPlanilla.setPorcentajeAdicional(Double.parseDouble(JOptionPane.showInputDialog("Ingrese el salario mensual del empleado por planilla "+(i+1))));
-                        arregloEmpleadosPlanilla[i]=miEmpleadoPlanilla;
+                        arregloEmpleadosPlanilla.add(miEmpleadoPlanilla);
 
                     }
                     JOptionPane.showMessageDialog(null, "El registro de Empleados por Planilla se ha realizado con exito");
@@ -386,9 +392,8 @@ public class Procesos {
                 }
                 break;
             case 2:
-                if (arregloEmpleadosEventual==null) {
+                if (arregloEmpleadosEventual.isEmpty()) {
                     int cantEmpleadoEventual=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de empleados eventuales a registrar"));
-                    arregloEmpleadosEventual=new EmpleadoEventual[cantEmpleadoEventual];
 
                     for (int i = 0; i < cantEmpleadoEventual; i++) {
                         JOptionPane.showMessageDialog(null, "Registro de datos Empleado Eventual "+(i+1));
@@ -413,7 +418,7 @@ public class Procesos {
 
                         miEmpleadoEventual.setHonorariosHora(Double.parseDouble(JOptionPane.showInputDialog("Ingrese los honorarios hora del Empleado Eventual "+(i+1))));
                         miEmpleadoEventual.setFechaTerminoContrato(JOptionPane.showInputDialog("Ingrese la fecha de terminacion de contrato del Empleado Eventual "+(i+1)));
-                        arregloEmpleadosEventual[i]=miEmpleadoEventual;
+                        arregloEmpleadosEventual.add(miEmpleadoEventual);
                     }
                     JOptionPane.showMessageDialog(null, "El registro de Empleados Eventuales se ha realizado con exito");
                 }
@@ -423,9 +428,8 @@ public class Procesos {
                 break;
 
             case 3:
-                if (arregloMedicos==null) {
+                if (arregloMedicos.isEmpty()) {
                     int cantMedicos=Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de Medicos a registrar"));
-                    arregloMedicos=new Medico[cantMedicos];
                     for (int i = 0; i < cantMedicos; i++) {
                         JOptionPane.showMessageDialog(null, "Registro de datos Medico "+(i+1));
                         asignarValoresGeneralesEmpleado("Medico "+(i+1));
@@ -447,7 +451,7 @@ public class Procesos {
 
                         miMedico.setEspecialidad(JOptionPane.showInputDialog("Ingrese la especialidad del Medico "+(i+1)));
                         miMedico.setNumConsultorio(Integer.parseInt(JOptionPane.showInputDialog("Ingrese el numero de consultorio del Medico "+(i+1))));
-                        arregloMedicos[i]=miMedico;
+                        arregloMedicos.add(miMedico);
                     }
                     JOptionPane.showMessageDialog(null, "El registro de Medicos se ha realizado con exito");
 
